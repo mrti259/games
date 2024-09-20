@@ -1,0 +1,9 @@
+@import "open-props/style";
+@import "open-props/normalize";
+@import "open-props/buttons";
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -2503,6 +2503,11 @@ oniguruma-to-js@0.4.3:
   dependencies:
     regex "^4.3.2"
 
+open-props@^1.7.6:
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/open-props/-/open-props-1.7.6.tgz#4098b3975e12c2ab2e2835db179c93e9f63c4c72"
+  integrity sha512-fE3E22x8lCf6gJrPO3L54NKrPaqQGxeKoXLz4JIXrhALD3Ua1kkE2kMw8HmlTKYF9BSLLMfoVfsT3UC1PJcaww==
+
 ora@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/ora/-/ora-8.1.0.tgz#c3db2f9f83a2bec9e8ab71fe3b9ae234d65ca3a8"
