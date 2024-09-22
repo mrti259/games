@@ -1,6 +1,6 @@
 {
-    "won": "You won!",
-    "lose": "You lose!",
-    "secret_word": "The secret word was",
-    "play_again": "Play again!"
+  "won": "You won!",
+  "lose": "You lose!",
+  "secret_word": "The secret word was",
+  "play_again": "Play again!"
 }

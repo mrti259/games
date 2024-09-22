@@ -19,7 +19,12 @@ export class WordleService {
   static async newGame(lang: string) {
     const wordService = await WordService.get(lang);
     const textService = await TextService.get(lang);
-    const service = new this(wordService.getRandomWord(), 6, wordService, textService);
+    const service = new this(
+      wordService.getRandomWord(),
+      6,
+      wordService,
+      textService,
+    );
     return [service, { ...service._lastResult }] as const;
   }
 
@@ -28,7 +33,7 @@ export class WordleService {
     value: "",
     won: false,
     ended: false,
-    messages: []
+    messages: [],
   };
 
   constructor(
@@ -36,7 +41,7 @@ export class WordleService {
     private _maxTries: number,
     private _wordService: WordService,
     private _textService: TextService,
-  ) { }
+  ) {}
 
   async submit(value: string): Promise<SubmitResult> {
     const [isValid, message] = this._isValidWord(value);
@@ -55,10 +60,10 @@ export class WordleService {
         result.messages = [
           result.won
             ? this._textService.get("won")
-            : this._textService.get("lose")
-          , `${this._textService.get("secret_word")} "${this._secretWord}"`
-          , this._textService.get("play_again")
-        ]
+            : this._textService.get("lose"),
+          `${this._textService.get("secret_word")} "${this._secretWord}"`,
+          this._textService.get("play_again"),
+        ];
       }
     }
 
@@ -78,9 +83,9 @@ export class WordleService {
       this._secretWord[i] === char
         ? Hint.is
         : this._secretWord.includes(char) &&
-          word[this._secretWord.indexOf(char)] !== char &&
-          this._countCharInString(char, word.slice(0, i)) <
-          this._countCharInString(char, this._secretWord)
+            word[this._secretWord.indexOf(char)] !== char &&
+            this._countCharInString(char, word.slice(0, i)) <
+              this._countCharInString(char, this._secretWord)
           ? Hint.in
           : Hint.miss,
     ]);
