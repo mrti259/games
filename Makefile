@@ -14,7 +14,7 @@ stash:
 	git stash
 	
 pop:
-	git stash pop
+	git stash pop || echo ""
 
 commit-changes:
 	git commit -a -m "Auto-commit" || echo ""
