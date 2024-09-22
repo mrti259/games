@@ -1,0 +1,9 @@
+---
+interface Props {
+  path: `/${string}`;
+}
+
+const { path } = Astro.props;
+---
+
+<a href={import.meta.env.BASE_URL + path}><slot /></a>

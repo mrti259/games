@@ -1,20 +1,28 @@
 ---
-import "../assets/styles.css";
-import Wordle from "../games/wordle/Wordle.svelte";
+import AppLink from "../components/AppLink.astro";
+import BaseLayout from "../components/BaseLayout.astro";
 
-const title = "Wordle";
+const wordleLangs = ["en", "es"];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-  </head>
-  <body>
-    <h1>{title}</h1>
-    <Wordle client:load />
-  </body>
-</html>
+<BaseLayout lang="en" title="Games">
+  <main>
+    {
+      wordleLangs.map((lang) => (
+        <AppLink path={`/wordle/${lang}`}>
+          <article>
+            <h2>Wordle({lang})</h2>
+          </article>
+        </AppLink>
+      ))
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2em;
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../components/BaseLayout.astro";
+import WordleGame from "../../games/wordle/WordleGame.svelte";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
+}
+
+const { lang } = Astro.params;
+const keyboard =
+  lang === "es"
+    ? ["qwertyuiop", "asdfghjklñ", "zxcvbnm"]
+    : ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+---
+
+<BaseLayout lang={lang} title={`Wordle (${lang})`}>
+  <WordleGame lang={lang} keyboard={keyboard} client:load />
+</BaseLayout>

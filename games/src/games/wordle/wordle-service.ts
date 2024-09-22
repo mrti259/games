@@ -1,3 +1,4 @@
+import { TextService } from "./text-service";
 import { WordService } from "./word-service";
 
 export enum Hint {
@@ -11,13 +12,14 @@ export type SubmitResult = {
   value: string;
   won: boolean;
   ended: boolean;
-  error: string;
+  messages: string[];
 };
 
 export class WordleService {
-  static async newGame() {
-    const wordService = await WordService.get();
-    const service = new this(wordService.getRandomWord(), 6, wordService);
+  static async newGame(lang: string) {
+    const wordService = await WordService.get(lang);
+    const textService = await TextService.get(lang);
+    const service = new this(wordService.getRandomWord(), 6, wordService, textService);
     return [service, { ...service._lastResult }] as const;
   }
 
@@ -26,18 +28,19 @@ export class WordleService {
     value: "",
     won: false,
     ended: false,
-    error: "",
+    messages: []
   };
 
   constructor(
     private _secretWord: string,
     private _maxTries: number,
     private _wordService: WordService,
-  ) {}
+    private _textService: TextService,
+  ) { }
 
   async submit(value: string): Promise<SubmitResult> {
-    const [isValid, error] = this._isValidWord(value);
-    const result = { ...this._lastResult, error };
+    const [isValid, message] = this._isValidWord(value);
+    const result: SubmitResult = { ...this._lastResult, messages: [message] };
 
     if (!isValid) {
       result.value = value;
@@ -47,6 +50,16 @@ export class WordleService {
       result.won = this._isSecretWord(guess);
       result.ended = result.won || !(result.guesses.length < this._maxTries);
       result.value = result.ended ? this._secretWord : "";
+
+      if (result.ended) {
+        result.messages = [
+          result.won
+            ? this._textService.get("won")
+            : this._textService.get("lose")
+          , `${this._textService.get("secret_word")} "${this._secretWord}"`
+          , this._textService.get("play_again")
+        ]
+      }
     }
 
     return (this._lastResult = result);
@@ -65,9 +78,9 @@ export class WordleService {
       this._secretWord[i] === char
         ? Hint.is
         : this._secretWord.includes(char) &&
-            word[this._secretWord.indexOf(char)] !== char &&
-            this._countCharInString(char, word.slice(0, i)) <
-              this._countCharInString(char, this._secretWord)
+          word[this._secretWord.indexOf(char)] !== char &&
+          this._countCharInString(char, word.slice(0, i)) <
+          this._countCharInString(char, this._secretWord)
           ? Hint.in
           : Hint.miss,
     ]);
