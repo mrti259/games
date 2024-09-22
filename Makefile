@@ -1,4 +1,4 @@
-YARN := cd games && yarn
+YARN := cd app && yarn
 
 dev: install
 	$(YARN) dev
