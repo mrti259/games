@@ -1,5 +1,6 @@
 ---
 import "../assets/styles.css";
+import AppLink from "./AppLink.astro";
 
 interface Props {
   lang: string;
@@ -18,7 +19,13 @@ const { lang, title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <h1>{title}</h1>
+    <AppLink path="/">
+      <h1>{title}</h1>
+    </AppLink>
     <slot />
   </body>
 </html>
+
+<style>
+  h1 {text-align:center}
+</style>

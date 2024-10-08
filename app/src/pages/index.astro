@@ -11,7 +11,7 @@ const wordleLangs = ["en", "es"];
       wordleLangs.map((lang) => (
         <AppLink path={`/wordle/${lang}`}>
           <article>
-            <h2>Wordle({lang})</h2>
+            <h3>Wordle({lang})</h3>
           </article>
         </AppLink>
       ))
@@ -21,8 +21,10 @@ const wordleLangs = ["en", "es"];
 
 <style>
   main {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 2em;
   }
 </style>

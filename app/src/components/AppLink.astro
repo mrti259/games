@@ -7,3 +7,9 @@ const { path } = Astro.props;
 ---
 
 <a href={import.meta.env.BASE_URL + path}><slot /></a>
+
+<style>
+  a, a:visited {
+    color: unset;
+  }
+</style>
